@@ -5,9 +5,9 @@ import psycopg2.extras
 def conecta_db():
     con = psycopg2.connect(
         host='localhost',
-        database='adm_simcc,
+        database='adm_simcc',
         user='postgres',
-        password='123'
+        password='root'
     )
 
     return con

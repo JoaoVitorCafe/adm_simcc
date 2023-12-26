@@ -9,62 +9,51 @@ CREATE DATABASE adm_simcc
     IS_TEMPLATE = FALSE;
 
 DROP TABLE  IF EXISTS institution;
-
 CREATE TABLE institution(
-institution_id SERIAL PRIMARY KEY,
-name VARCHAR(150) NOT NULL,
-acronym VARCHAR(20) NOT NULL,
-email_user VARCHAR(100) NOT NULL,
-PASSWORD  VARCHAR(100) NOT NULL
-
-
-
+      institution_id SERIAL PRIMARY KEY,
+      name VARCHAR(150) NOT NULL,
+      acronym VARCHAR(20) NOT NULL,
+      email_user VARCHAR(100) NOT NULL,
+      PASSWORD  VARCHAR(100) NOT NULL
 );
 
 
 DROP TABLE  IF EXISTS researcher;
-
 CREATE TABLE researcher(
-researcher_id SERIAL PRIMARY KEY,
-name VARCHAR(150) NOT NULL,
-lattes_id VARCHAR(20) NOT NULL,
-institution_id INTEGER NOT NULL,
-FOREIGN KEY (institution_id )
-      REFERENCES institution (institution_id)
-
+      researcher_id SERIAL PRIMARY KEY,
+      name VARCHAR(150) NOT NULL,
+      lattes_id VARCHAR(20) NOT NULL,
+      institution_id INTEGER NOT NULL,
+      FOREIGN KEY (institution_id )
+            REFERENCES institution (institution_id)
 );
 
 
 DROP TABLE  IF EXISTS graduate_program;
-
 CREATE TABLE graduate_program(
-graduate_program_id SERIAL PRIMARY KEY,
-code VARCHAR(100) NOT NULL,
-name VARCHAR(100) NOT NULL,
-area VARCHAR(100) NOT NULL,
-modality VARCHAR(100) NOT NULL,
-TYPE VARCHAR(100) NULL,
-rating VARCHAR(5),
-institution_id INTEGER NOT NULL,
-FOREIGN KEY (institution_id )
-      REFERENCES institution (institution_id)
-
-
+      graduate_program_id SERIAL PRIMARY KEY,
+      code VARCHAR(100) NOT NULL,
+      name VARCHAR(100) NOT NULL,
+      area VARCHAR(100) NOT NULL,
+      modality VARCHAR(100) NOT NULL,
+      TYPE VARCHAR(100) NULL,
+      rating VARCHAR(5),
+      institution_id INTEGER NOT NULL,
+      FOREIGN KEY (institution_id )
+            REFERENCES institution (institution_id)
 
 );
 
 DROP TABLE  IF EXISTS graduate_program_researcher;
+      CREATE TABLE graduate_program_researcher(
+      graduate_program_id  integer ,
+      researcher_id INTEGER,
+      year INTEGER,
+      type_ varchar(100),
 
-CREATE TABLE graduate_program_researcher(
-graduate_program_id  integer ,
-researcher_id INTEGER,
-year INTEGER,
-type_ varchar(100),
-
- PRIMARY KEY (graduate_program_id,researcher_id,year),
- FOREIGN KEY (researcher_id )
-      REFERENCES researcher (researcher_id),
-  FOREIGN KEY (graduate_program_id )
-      REFERENCES graduate_program (graduate_program_id)     
-
+      PRIMARY KEY (graduate_program_id,researcher_id,year),
+      FOREIGN KEY (researcher_id )
+            REFERENCES researcher (researcher_id),
+      FOREIGN KEY (graduate_program_id )
+            REFERENCES graduate_program (graduate_program_id)
 );
