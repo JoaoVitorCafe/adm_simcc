@@ -44,14 +44,14 @@ CREATE TABLE adm_graduate_program(
 
 );
 
-DROP TABLE  IF EXISTS graduate_program_researcher;
+DROP TABLE  IF EXISTS adm_graduate_program_researcher;
       CREATE TABLE adm_graduate_program_researcher(
       graduate_program_id  integer ,
       researcher_id INTEGER,
       year INTEGER,
       type_ varchar(100),
 
-      PRIMARY KEY (graduate_program_id,researcher_id,year),
+      PRIMARY KEY (graduate_program_id,researcher_id, year),
       FOREIGN KEY (researcher_id )
             REFERENCES researcher (researcher_id),
       FOREIGN KEY (graduate_program_id )

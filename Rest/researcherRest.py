@@ -40,12 +40,12 @@ def Insert():
 
     # Nota - Melhorar a forma de instanciar
     for researcher_data in JsonInstitutions:
-        researcher_instance = Researcher()
-        researcher_instance.researcher_id = researcher_data["researcher_id"]
-        researcher_instance.name = researcher_data["name"]
-        researcher_instance.lattes_id = researcher_data["lattes_id"]
-        researcher_instance.institution_id = researcher_data["institution_id"]
+        Rs = Researcher()
+        Rs.researcher_id = researcher_data["researcher_id"]
+        Rs.name = researcher_data["name"]
+        Rs.lattes_id = researcher_data["lattes_id"]
+        Rs.institution_id = researcher_data["institution_id"]
 
-        ResearcherSQL.insert_researcher(researcher_instance)
+        ResearcherSQL.insert_researcher(Rs)
 
     return jsonify("Hello institutionRest"), 200
