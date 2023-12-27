@@ -9,7 +9,7 @@ CREATE DATABASE adm_simcc
     IS_TEMPLATE = FALSE;
 
 -- Existe uma tabela no Tupi com os nomes: institution, researcher e graduate_program; Trocar antes de colocar em produção
-DROP TABLE  IF EXISTS institution;
+DROP TABLE  IF EXISTS adm_institution;
 CREATE TABLE adm_institution(
       institution_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
@@ -19,18 +19,18 @@ CREATE TABLE adm_institution(
 );
 
 
-DROP TABLE  IF EXISTS researcher;
+DROP TABLE  IF EXISTS adm_researcher;
 CREATE TABLE adm_researcher(
       researcher_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
       lattes_id VARCHAR(20) NOT NULL,
       institution_id INTEGER NOT NULL,
       FOREIGN KEY (institution_id )
-            REFERENCES institution (institution_id)
+            REFERENCES adm_institution (institution_id)
 );
 
 
-DROP TABLE  IF EXISTS graduate_program;
+DROP TABLE  IF EXISTS adm_graduate_program;
 CREATE TABLE adm_graduate_program(
       graduate_program_id SERIAL PRIMARY KEY,
       code VARCHAR(100) NOT NULL,
@@ -41,11 +41,11 @@ CREATE TABLE adm_graduate_program(
       rating VARCHAR(5),
       institution_id INTEGER NOT NULL,
       FOREIGN KEY (institution_id )
-            REFERENCES institution (institution_id)
+            REFERENCES adm_institution (institution_id)
 
 );
 
-DROP TABLE  IF EXISTS graduate_program_researcher;
+DROP TABLE  IF EXISTS adm_graduate_program_researcher;
       CREATE TABLE adm_graduate_program_researcher(
       graduate_program_id  integer ,
       researcher_id INTEGER,
@@ -54,7 +54,7 @@ DROP TABLE  IF EXISTS graduate_program_researcher;
 
       PRIMARY KEY (graduate_program_id,researcher_id,year),
       FOREIGN KEY (researcher_id )
-            REFERENCES researcher (researcher_id),
+            REFERENCES adm_researcher (researcher_id),
       FOREIGN KEY (graduate_program_id )
-            REFERENCES graduate_program (graduate_program_id)
+            REFERENCES adm_graduate_program (graduate_program_id)
 );

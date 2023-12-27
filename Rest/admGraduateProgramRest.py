@@ -3,9 +3,9 @@ from flask_cors import cross_origin
 
 from Dao import dbHandler as db
 
-graduateProgramRest = Blueprint('graduateProgramRest', __name__)
+admGraduateProgramRest = Blueprint('admGraduateProgramRest', __name__)
 
-@graduateProgramRest.route('/graduateProgramRest', methods=['GET'])
+@graduateProgramRest.route('/graduateProgramRest', methods=['POST'])
 @cross_origin(origin="*", headers=["Content-Type"])
 def route():
     

@@ -6,7 +6,7 @@ from Dao import dbHandler as db
 graduateProgramResearcherRest = Blueprint("graduateProgramResearcherRest", __name__)
 
 
-@graduateProgramResearcherRest.route("/graduateProgramResearcherRest", methods=["GET"])
+@graduateProgramResearcherRest.route("/graduateProgramResearcherRest", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def route():
     
