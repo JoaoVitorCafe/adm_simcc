@@ -8,8 +8,9 @@ CREATE DATABASE adm_simcc
     CONNECTION LIMIT = -1
     IS_TEMPLATE = FALSE;
 
+-- Existe uma tabela no Tupi com os nomes: institution, researcher e graduate_program; Trocar antes de colocar em produção
 DROP TABLE  IF EXISTS institution;
-CREATE TABLE institution(
+CREATE TABLE adm_institution(
       institution_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
       acronym VARCHAR(20) NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE institution(
 
 
 DROP TABLE  IF EXISTS researcher;
-CREATE TABLE researcher(
+CREATE TABLE adm_researcher(
       researcher_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
       lattes_id VARCHAR(20) NOT NULL,
@@ -30,7 +31,7 @@ CREATE TABLE researcher(
 
 
 DROP TABLE  IF EXISTS graduate_program;
-CREATE TABLE graduate_program(
+CREATE TABLE adm_graduate_program(
       graduate_program_id SERIAL PRIMARY KEY,
       code VARCHAR(100) NOT NULL,
       name VARCHAR(100) NOT NULL,
@@ -45,7 +46,7 @@ CREATE TABLE graduate_program(
 );
 
 DROP TABLE  IF EXISTS graduate_program_researcher;
-      CREATE TABLE graduate_program_researcher(
+      CREATE TABLE adm_graduate_program_researcher(
       graduate_program_id  integer ,
       researcher_id INTEGER,
       year INTEGER,
