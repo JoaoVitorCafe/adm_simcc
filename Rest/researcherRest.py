@@ -10,22 +10,17 @@ researcherRest = Blueprint("researcherRest", __name__)
 @researcherRest.route("/admResearcher/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
-    JsonIDs = request.get_json()
-    if not JsonIDs:
-        return jsonify({"error": "Erro no Json enviado"}), 400
-
     JsonResearchers = list()
-    for ID in JsonIDs:
-        dfResearcher = ResearcherSQL.query_researcher(int(ID["institution_id"]))
 
-        for Index, researcher in dfResearcher.iterrows():
-            Rs = Researcher()
-            Rs.researcher_id = researcher.researcher_id
-            Rs.name = researcher.name
-            Rs.lattes_id = researcher.lattes_id
-            Rs.institution_id = researcher.institution_id
+    dfResearcher = ResearcherSQL.query_researcher(request.args.get("institution_id"))
 
-            JsonResearchers.append(Rs.get_json())
+    for Index, researcher in dfResearcher.iterrows():
+        Rs = Researcher()
+        Rs.researcher_id = researcher["researcher_id"]
+        Rs.name = researcher["name"]
+        Rs.lattes_id = researcher["lattes_id"]
+        Rs.institution_id = researcher["institution_id"]
+        JsonResearchers.append(Rs.get_json())
 
     return jsonify(JsonResearchers), 200
 

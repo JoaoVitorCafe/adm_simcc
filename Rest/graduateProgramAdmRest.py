@@ -10,28 +10,22 @@ graduateProgramAdmRest = Blueprint("graduateProgramAdmRest", __name__)
 @graduateProgramAdmRest.route("/admGraduateProgramRest/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
-    JsonIDs = request.get_json()
-    if not JsonIDs:
-        return jsonify({"error": "Erro no Json enviado"}), 400
-
     JsonGraduateProgram = list()
-    for ID in JsonIDs:
-        dfGraduateProgram = GraduateProgramAdmSQL.query_graduateProgram(
-            int(ID["institution_id"])
-        )
+    dfGraduateProgram = GraduateProgramAdmSQL.query_graduateProgram(
+        request.args.get("institution_id")
+    )
 
-        for Index, graduateprogram in dfGraduateProgram.iterrows():
-            Gp = GraduateProgram()
-            Gp.graduate_program_id = graduateprogram.graduate_program_id
-            Gp.code = graduateprogram.code
-            Gp.name = graduateprogram.name
-            Gp.area = graduateprogram.area
-            Gp.modality = graduateprogram.modality
-            Gp.type = graduateprogram.type
-            Gp.rating = graduateprogram.rating
-            Gp.institution_id = graduateprogram.institution_id
-
-            JsonGraduateProgram.append(Gp.get_json())
+    for Index, graduateprogram in dfGraduateProgram.iterrows():
+        Gp = GraduateProgram()
+        Gp.graduate_program_id = graduateprogram["graduate_program_id"]
+        Gp.code = graduateprogram["code"]
+        Gp.name = graduateprogram["name"]
+        Gp.area = graduateprogram["area"]
+        Gp.modality = graduateprogram["modality"]
+        Gp.type = graduateprogram["type"]
+        Gp.rating = graduateprogram["rating"]
+        Gp.institution_id = graduateprogram["institution_id"]
+        JsonGraduateProgram.append(Gp.get_json())
 
     return jsonify(JsonGraduateProgram), 200
 

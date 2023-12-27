@@ -3,7 +3,7 @@ import sys
 
 sys.path.append("../")
 
-import Dao.dbHandler as dbHandler
+import Dao.sgbdSQL as sgbdSQL
 import pandas as pd
 from Model.GraduateProgramAdm import GraduateProgram
 
@@ -24,7 +24,7 @@ def insert_graduationProgram(GraduateProgram):
         institution_id=GraduateProgram.institution_id,
     )
 
-    return dbHandler.execScript_db(sql)
+    return sgbdSQL.execScript_db(sql)
 
 
 def query_graduateProgram(ID):
@@ -34,7 +34,7 @@ def query_graduateProgram(ID):
         filter=ID
     )
     return pd.DataFrame(
-        dbHandler.consultar_db(sql),
+        sgbdSQL.consultar_db(sql),
         columns=[
             "graduate_program_id",
             "code",

@@ -10,23 +10,19 @@ institutionRest = Blueprint("institutionRest", __name__)
 @institutionRest.route("/admInstitution/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
-    JsonIDs = request.get_json()
-    if not JsonIDs:
-        return jsonify({"error": "Erro no Json enviado"}), 400
-
     JsonInstitutions = list()
-    for ID in JsonIDs:
-        dfInstitutions = InstitutionSQL.query_institution(int(ID["institution_id"]))
+    dfInstitutions = InstitutionSQL.query_institution(
+        request.args.get("institution_id")
+    )
 
-        for Index, institution in dfInstitutions.iterrows():
-            Is = Institution()
-            Is.institution_id = institution.institution_id
-            Is.name = institution.name
-            Is.acronym = institution.acronym
-            Is.email_user = institution.email_user
-            Is.password = institution.password
-
-            JsonInstitutions.append(Is.get_json())
+    for Index, institution in dfInstitutions.iterrows():
+        Is = Institution()
+        Is.institution_id = institution["institution_id"]
+        Is.name = institution["name"]
+        Is.acronym = institution["acronym"]
+        Is.email_user = institution["email_user"]
+        Is.password = institution["password"]
+        JsonInstitutions.append(Is.get_json())
 
     return jsonify(JsonInstitutions), 200
 

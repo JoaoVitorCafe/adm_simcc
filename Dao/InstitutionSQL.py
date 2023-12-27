@@ -3,7 +3,7 @@ import sys
 
 sys.path.append("../")
 
-import Dao.dbHandler as dbHandler
+import Dao.sgbdSQL as sgbdSQL
 import pandas as pd
 from Model.Institution import Institution
 
@@ -20,7 +20,7 @@ def insert_institution(institution):
         password=institution.password,
     )
 
-    return dbHandler.execScript_db(sql)
+    return sgbdSQL.execScript_db(sql)
 
 
 def query_institution(ID):
@@ -30,6 +30,6 @@ def query_institution(ID):
         filter=ID
     )
     return pd.DataFrame(
-        dbHandler.consultar_db(sql),
+        sgbdSQL.consultar_db(sql),
         columns=["institution_id", "name", "acronym", "email_user", "password"],
     )

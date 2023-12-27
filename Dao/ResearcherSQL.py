@@ -3,7 +3,7 @@ import sys
 
 sys.path.append("../")
 
-import Dao.dbHandler as dbHandler
+import Dao.sgbdSQL as sgbdSQL
 import pandas as pd
 from Model.Resercher import Researcher
 
@@ -19,7 +19,7 @@ def insert_researcher(Researcher):
         institution_id=Researcher.institution_id,
     )
 
-    return dbHandler.execScript_db(sql)
+    return sgbdSQL.execScript_db(sql)
 
 
 def query_researcher(ID):
@@ -29,6 +29,6 @@ def query_researcher(ID):
         filter=ID
     )
     return pd.DataFrame(
-        dbHandler.consultar_db(sql),
+        sgbdSQL.consultar_db(sql),
         columns=["researcher_id", "name", "lattes_id", "institution_id"],
     )

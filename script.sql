@@ -8,7 +8,7 @@ CREATE DATABASE adm_simcc
     CONNECTION LIMIT = -1
     IS_TEMPLATE = FALSE;
 
-DROP TABLE  IF EXISTS institution;
+DROP TABLE  IF EXISTS adm_institution;
 CREATE TABLE adm_institution(
       institution_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
@@ -18,9 +18,9 @@ CREATE TABLE adm_institution(
 );
 
 
-DROP TABLE  IF EXISTS researcher;
+DROP TABLE  IF EXISTS adm_researcher;
 CREATE TABLE adm_researcher(
-      researcher_id SERIAL PRIMARY KEY,
+      researcher_id uuid NOT NULL DEFAULT uuid_generate_v4(),
       name VARCHAR(150) NOT NULL,
       lattes_id VARCHAR(20) NOT NULL,
       institution_id INTEGER NOT NULL,
@@ -29,9 +29,9 @@ CREATE TABLE adm_researcher(
 );
 
 
-DROP TABLE  IF EXISTS graduate_program;
+DROP TABLE  IF EXISTS adm_graduate_program;
 CREATE TABLE adm_graduate_program(
-      graduate_program_id SERIAL PRIMARY KEY,
+      graduate_program_id uuid NOT NULL DEFAULT uuid_generate_v4(),
       code VARCHAR(100) NOT NULL,
       name VARCHAR(100) NOT NULL,
       area VARCHAR(100) NOT NULL,
@@ -40,13 +40,13 @@ CREATE TABLE adm_graduate_program(
       rating VARCHAR(5),
       institution_id INTEGER NOT NULL,
       FOREIGN KEY (institution_id )
-            REFERENCES adm_graduate_program (institution_id)
+            REFERENCES adm_institution (institution_id)
 
 );
 
 DROP TABLE  IF EXISTS adm_graduate_program_researcher;
       CREATE TABLE adm_graduate_program_researcher(
-      graduate_program_id  integer ,
+      graduate_program_id uuid NOT NULL DEFAULT uuid_generate_v4(),
       researcher_id INTEGER,
       year INTEGER,
       type_ varchar(100),
