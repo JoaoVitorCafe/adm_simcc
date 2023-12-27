@@ -42,6 +42,7 @@ def Insert():
     # Nota - Melhorar a forma de instanciar
     for institution_data in JsonInstitutions:
         institution_instance = Institution()
+        institution_instance.institution_id = institution_data["institution_id"]
         institution_instance.name = institution_data["name"]
         institution_instance.acronym = institution_data["acronym"]
         institution_instance.email_user = institution_data["email_user"]

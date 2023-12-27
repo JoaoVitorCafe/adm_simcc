@@ -8,7 +8,7 @@ graduateProgramResearcherRest = Blueprint("graduateProgramResearcherRest", __nam
 
 
 @graduateProgramResearcherRest.route(
-    "/graduateProgramResearcherRest/Query", methods=["GET"]
+    "/admGraduateProgramResearcherRest/Query", methods=["GET"]
 )
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
@@ -19,7 +19,7 @@ def Query():
     JsonGpResearcher = list()
     for ID in JsonIDs:
         dfGpResearcher = GraduateProgramResearcherSQL.query_GpResearcher(
-            int(ID["institution_id"])
+            int(ID["graduate_program_id"])
         )
         for Index, GpResearcher in dfGpResearcher.iterrows():
             GpR = GraduateProgramResearcher()
@@ -34,7 +34,7 @@ def Query():
 
 
 @graduateProgramResearcherRest.route(
-    "/graduateProgramResearcherRest/Insert", methods=["POST"]
+    "/admGraduateProgramResearcherRest/Insert", methods=["POST"]
 )
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():

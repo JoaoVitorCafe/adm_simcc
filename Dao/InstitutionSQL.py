@@ -10,9 +10,10 @@ from Model.Institution import Institution
 
 def insert_institution(institution):
     sql = """
-      INSERT INTO adm_institution (name, acronym, email_user, PASSWORD)
-      VALUES ('{name}', '{acronym}', '{email_user}', '{password}')
+      INSERT INTO adm_institution (institution_id, name, acronym, email_user, PASSWORD)
+      VALUES ('{institution_id}', '{name}', '{acronym}', '{email_user}', '{password}')
    """.format(
+        institution_id=institution.institution_id,
         name=institution.name,
         acronym=institution.acronym,
         email_user=institution.email_user,
