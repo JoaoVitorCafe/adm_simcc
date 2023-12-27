@@ -9,7 +9,7 @@ CREATE DATABASE adm_simcc
     IS_TEMPLATE = FALSE;
 
 DROP TABLE  IF EXISTS institution;
-CREATE TABLE institution(
+CREATE TABLE adm_institution(
       institution_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
       acronym VARCHAR(20) NOT NULL,
@@ -19,18 +19,18 @@ CREATE TABLE institution(
 
 
 DROP TABLE  IF EXISTS researcher;
-CREATE TABLE researcher(
+CREATE TABLE adm_researcher(
       researcher_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
       lattes_id VARCHAR(20) NOT NULL,
       institution_id INTEGER NOT NULL,
       FOREIGN KEY (institution_id )
-            REFERENCES institution (institution_id)
+            REFERENCES adm_institution (institution_id)
 );
 
 
 DROP TABLE  IF EXISTS graduate_program;
-CREATE TABLE graduate_program(
+CREATE TABLE adm_graduate_program(
       graduate_program_id SERIAL PRIMARY KEY,
       code VARCHAR(100) NOT NULL,
       name VARCHAR(100) NOT NULL,
@@ -40,12 +40,12 @@ CREATE TABLE graduate_program(
       rating VARCHAR(5),
       institution_id INTEGER NOT NULL,
       FOREIGN KEY (institution_id )
-            REFERENCES institution (institution_id)
+            REFERENCES adm_graduate_program (institution_id)
 
 );
 
 DROP TABLE  IF EXISTS graduate_program_researcher;
-      CREATE TABLE graduate_program_researcher(
+      CREATE TABLE adm_graduate_program_researcher(
       graduate_program_id  integer ,
       researcher_id INTEGER,
       year INTEGER,
@@ -55,5 +55,5 @@ DROP TABLE  IF EXISTS graduate_program_researcher;
       FOREIGN KEY (researcher_id )
             REFERENCES researcher (researcher_id),
       FOREIGN KEY (graduate_program_id )
-            REFERENCES graduate_program (graduate_program_id)
+            REFERENCES adm_graduate_program_researcher (graduate_program_id)
 );
