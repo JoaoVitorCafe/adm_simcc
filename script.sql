@@ -48,9 +48,11 @@ CREATE TABLE graduate_program(
       TYPE VARCHAR(100) NULL,
       rating VARCHAR(5),
       institution_id INTEGER NOT NULL,
+      description VARCHAR(500) NULL,
+      url_image VARCHAR(200) NULL,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      PRIMARY KEY (graduate_program_id)
+      PRIMARY KEY (graduate_program_id),
       FOREIGN KEY (institution_id )
             REFERENCES institution (institution_id)
 

@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 from Rest.graduateProgramResearcherRest import graduateProgramResearcherRest
 from Rest.institutionRest import institutionRest
 from Rest.researcherRest import researcherRest
-from Rest.graduateProgramAdmRest import graduateProgramAdmRest
+from Rest.graduateProgramRest import graduateProgramAdmRest
 
 
 app = Flask(__name__)

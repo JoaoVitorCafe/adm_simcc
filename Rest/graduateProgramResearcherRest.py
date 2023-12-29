@@ -38,16 +38,18 @@ def Insert():
     JsonGpResearcher = request.get_json()
     if not JsonGpResearcher:
         return jsonify({"error": "Erro no Json enviado"}), 400
+    try:
+        for GpResearcher_data in JsonGpResearcher:
+            gp_researcher_inst = GraduateProgramResearcher()
+            gp_researcher_inst.graduate_program_id = GpResearcher_data[
+                "graduate_program_id"
+            ]
+            gp_researcher_inst.researcher_id = GpResearcher_data["researcher_id"]
+            gp_researcher_inst.year = GpResearcher_data["year"]
+            gp_researcher_inst.type_ = GpResearcher_data["type_"]
 
-    for GpResearcher_data in JsonGpResearcher:
-        gp_researcher_inst = GraduateProgramResearcher()
-        gp_researcher_inst.graduate_program_id = GpResearcher_data[
-            "graduate_program_id"
-        ]
-        gp_researcher_inst.researcher_id = GpResearcher_data["researcher_id"]
-        gp_researcher_inst.year = GpResearcher_data["year"]
-        gp_researcher_inst.type_ = GpResearcher_data["type_"]
+            GraduateProgramResearcherSQL.insert(gp_researcher_inst)
+    except Exception as Error:
+        return jsonify(f"{Error}"), 400
 
-        GraduateProgramResearcherSQL.insert(gp_researcher_inst)
-
-    return jsonify("Hello graduateProgramResearcherRest"), 200
+    return jsonify("Incerssão bem sucedida"), 200

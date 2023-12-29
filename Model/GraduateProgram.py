@@ -8,6 +8,8 @@ class GraduateProgram(object):
         self.type = str()
         self.rating = str()
         self.institution_id = None
+        self.description = str()
+        self.url_image = str()
 
     def get_json(self):
         graduateProgram = {

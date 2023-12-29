@@ -5,14 +5,14 @@ sys.path.append("../")
 
 import Dao.dbHandler as dbHandler
 import pandas as pd
-from Model.GraduateProgramAdm import GraduateProgram
+from Model.GraduateProgram import GraduateProgram
 
 
 def insert(GraduateProgram):
     sql = """
-    INSERT INTO graduate_program (graduate_program_id, code, name, area, modality, TYPE, rating, institution_id)
+    INSERT INTO graduate_program (graduate_program_id, code, name, area, modality, TYPE, rating, institution_id, description, url_image)
     VALUES
-        ('{graduate_program_id}', '{code}', '{name}', '{area}', '{modality}', '{TYPE}', '{rating}', '{institution_id}')
+        ('{graduate_program_id}', '{code}', '{name}', '{area}', '{modality}', '{TYPE}', '{rating}', '{institution_id}', '{description}', '{url_image}')
     """.format(
         graduate_program_id=GraduateProgram.graduate_program_id,
         code=GraduateProgram.code,
@@ -22,6 +22,8 @@ def insert(GraduateProgram):
         TYPE=GraduateProgram.type,
         rating=GraduateProgram.rating,
         institution_id=GraduateProgram.institution_id,
+        description=GraduateProgram.description,
+        url_image=GraduateProgram.url_image,
     )
 
     return dbHandler.execScript_db(sql)
@@ -44,5 +46,9 @@ def query(ID):
             "type",
             "rating",
             "institution_id",
+            "description",
+            "url_image",
+            "created_at",
+            "updated_at",
         ],
     )

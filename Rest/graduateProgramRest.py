@@ -1,17 +1,17 @@
 from flask import jsonify, request, Blueprint
 from flask_cors import cross_origin
 
-from Dao import GraduateProgramAdmSQL
-from Model.GraduateProgramAdm import GraduateProgram
+from Dao import GraduateProgramSQL
+from Model.GraduateProgram import GraduateProgram
 
 graduateProgramAdmRest = Blueprint("graduateProgramAdmRest", __name__)
 
 
-@graduateProgramAdmRest.route("/admGraduateProgramRest/Query", methods=["GET"])
+@graduateProgramAdmRest.route("/GraduateProgramRest/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonGraduateProgram = list()
-    dfGraduateProgram = GraduateProgramAdmSQL.query(request.args.get("institution_id"))
+    dfGraduateProgram = GraduateProgramSQL.query(request.args.get("institution_id"))
 
     for Index, graduateprogram in dfGraduateProgram.iterrows():
         graduation_program_int = GraduateProgram()
@@ -31,7 +31,7 @@ def Query():
     return jsonify(JsonGraduateProgram), 200
 
 
-@graduateProgramAdmRest.route("/admGraduateProgramRest/Insert", methods=["POST"])
+@graduateProgramAdmRest.route("/GraduateProgramRest/Insert", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():
     JsonGraduateProgram = request.get_json()
@@ -40,16 +40,19 @@ def Insert():
         return jsonify({"error": "Erro no Json enviado"}), 400
 
     for GraduateProgram_data in JsonGraduateProgram:
-        Gp = GraduateProgram()
-        Gp.graduate_program_id = GraduateProgram_data["graduate_program_id"]
-        Gp.code = GraduateProgram_data["code"]
-        Gp.name = GraduateProgram_data["name"]
-        Gp.area = GraduateProgram_data["area"]
-        Gp.modality = GraduateProgram_data["modality"]
-        Gp.type = GraduateProgram_data["type"]
-        Gp.rating = GraduateProgram_data["rating"]
-        Gp.institution_id = GraduateProgram_data["institution_id"]
+        try:
+            Gp = GraduateProgram()
+            Gp.graduate_program_id = GraduateProgram_data["graduate_program_id"]
+            Gp.code = GraduateProgram_data["code"]
+            Gp.name = GraduateProgram_data["name"]
+            Gp.area = GraduateProgram_data["area"]
+            Gp.modality = GraduateProgram_data["modality"]
+            Gp.type = GraduateProgram_data["type"]
+            Gp.rating = GraduateProgram_data["rating"]
+            Gp.institution_id = GraduateProgram_data["institution_id"]
 
-        GraduateProgramAdmSQL.insert(Gp)
+            GraduateProgramSQL.insert(Gp)
+        except Exception as Error:
+            return jsonify(f"{Error}"), 400
 
-    return jsonify("Hello graduateProgramAdmRest"), 200
+    return jsonify("Incerssão bem sucedida"), 200

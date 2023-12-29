@@ -5,7 +5,7 @@ sys.path.append("../")
 
 import Dao.dbHandler as dbHandler
 import pandas as pd
-from Model.GraduateProgramAdm import GraduateProgram
+from Model.GraduateProgram import GraduateProgram
 
 
 def insert(GraduateProgram):

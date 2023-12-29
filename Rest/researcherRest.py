@@ -34,14 +34,16 @@ def Insert():
     if not JsonInstitutions:
         return jsonify({"error": "Erro no Json enviado"}), 400
 
-    # Nota - Melhorar a forma de instanciar
-    for researcher_data in JsonInstitutions:
-        researcher_inst = Researcher()
-        researcher_inst.researcher_id = researcher_data["researcher_id"]
-        researcher_inst.name = researcher_data["name"]
-        researcher_inst.lattes_id = researcher_data["lattes_id"]
-        researcher_inst.institution_id = researcher_data["institution_id"]
+    try:
+        for researcher_data in JsonInstitutions:
+            researcher_inst = Researcher()
+            researcher_inst.researcher_id = researcher_data["researcher_id"]
+            researcher_inst.name = researcher_data["name"]
+            researcher_inst.lattes_id = researcher_data["lattes_id"]
+            researcher_inst.institution_id = researcher_data["institution_id"]
 
-        ResearcherSQL.insert(researcher_inst)
+            ResearcherSQL.insert(researcher_inst)
+    except Exception as Error:
+        return jsonify(f"{Error}"), 400
 
-    return jsonify("Hello institutionRest"), 200
+    return jsonify("Incerssão bem sucedida"), 200
