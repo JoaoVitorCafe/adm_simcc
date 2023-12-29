@@ -7,27 +7,26 @@ from Model.Institution import Institution
 institutionRest = Blueprint("institutionRest", __name__)
 
 
-@institutionRest.route("/admInstitution/Query", methods=["GET"])
+@institutionRest.route("/Institution/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonInstitutions = list()
-    dfInstitutions = InstitutionSQL.query_institution(
-        request.args.get("institution_id")
-    )
+    dfInstitutions = InstitutionSQL.query(request.args.get("institution_id"))
 
     for Index, institution in dfInstitutions.iterrows():
-        Is = Institution()
-        Is.institution_id = institution["institution_id"]
-        Is.name = institution["name"]
-        Is.acronym = institution["acronym"]
-        Is.email_user = institution["email_user"]
-        Is.password = institution["password"]
-        JsonInstitutions.append(Is.get_json())
+        institution_inst = Institution()
+        institution_inst.institution_id = institution["institution_id"]
+        institution_inst.name = institution["name"]
+        institution_inst.acronym = institution["acronym"]
+        institution_inst.email_user = institution["email_user"]
+        institution_inst.password = institution["password"]
+
+        JsonInstitutions.append(institution_inst.get_json())
 
     return jsonify(JsonInstitutions), 200
 
 
-@institutionRest.route("/admInstitution/Insert", methods=["POST"])
+@institutionRest.route("/Institution/Insert", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():
     JsonInstitutions = request.get_json()
@@ -44,6 +43,6 @@ def Insert():
         institution_instance.email_user = institution_data["email_user"]
         institution_instance.password = institution_data["password"]
 
-        InstitutionSQL.insert_institution(institution_instance)
+        InstitutionSQL.insert(institution_instance)
 
     return jsonify("Hello institutionRest"), 200

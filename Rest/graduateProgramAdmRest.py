@@ -11,21 +11,22 @@ graduateProgramAdmRest = Blueprint("graduateProgramAdmRest", __name__)
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonGraduateProgram = list()
-    dfGraduateProgram = GraduateProgramAdmSQL.query_graduateProgram(
-        request.args.get("institution_id")
-    )
+    dfGraduateProgram = GraduateProgramAdmSQL.query(request.args.get("institution_id"))
 
     for Index, graduateprogram in dfGraduateProgram.iterrows():
-        Gp = GraduateProgram()
-        Gp.graduate_program_id = graduateprogram["graduate_program_id"]
-        Gp.code = graduateprogram["code"]
-        Gp.name = graduateprogram["name"]
-        Gp.area = graduateprogram["area"]
-        Gp.modality = graduateprogram["modality"]
-        Gp.type = graduateprogram["type"]
-        Gp.rating = graduateprogram["rating"]
-        Gp.institution_id = graduateprogram["institution_id"]
-        JsonGraduateProgram.append(Gp.get_json())
+        graduation_program_int = GraduateProgram()
+        graduation_program_int.graduate_program_id = graduateprogram[
+            "graduate_program_id"
+        ]
+        graduation_program_int.code = graduateprogram["code"]
+        graduation_program_int.name = graduateprogram["name"]
+        graduation_program_int.area = graduateprogram["area"]
+        graduation_program_int.modality = graduateprogram["modality"]
+        graduation_program_int.type = graduateprogram["type"]
+        graduation_program_int.rating = graduateprogram["rating"]
+        graduation_program_int.institution_id = graduateprogram["institution_id"]
+
+        JsonGraduateProgram.append(graduation_program_int.get_json())
 
     return jsonify(JsonGraduateProgram), 200
 
@@ -49,6 +50,6 @@ def Insert():
         Gp.rating = GraduateProgram_data["rating"]
         Gp.institution_id = GraduateProgram_data["institution_id"]
 
-        GraduateProgramAdmSQL.insert_graduationProgram(Gp)
+        GraduateProgramAdmSQL.insert(Gp)
 
     return jsonify("Hello graduateProgramAdmRest"), 200

@@ -3,14 +3,14 @@ import sys
 
 sys.path.append("../")
 
-import Dao.sgbdSQL as sgbdSQL
+import Dao.dbHandler as dbHandler
 import pandas as pd
 from Model.GraduateProgramAdm import GraduateProgram
 
 
-def insert_graduationProgram(GraduateProgram):
+def insert(GraduateProgram):
     sql = """
-    INSERT INTO adm_graduate_program (graduate_program_id, code, name, area, modality, TYPE, rating, institution_id)
+    INSERT INTO graduate_program (graduate_program_id, code, name, area, modality, TYPE, rating, institution_id)
     VALUES
         ('{graduate_program_id}', '{code}', '{name}', '{area}', '{modality}', '{TYPE}', '{rating}', '{institution_id}')
     """.format(
@@ -24,17 +24,17 @@ def insert_graduationProgram(GraduateProgram):
         institution_id=GraduateProgram.institution_id,
     )
 
-    return sgbdSQL.execScript_db(sql)
+    return dbHandler.execScript_db(sql)
 
 
-def query_graduateProgram(ID):
+def query(ID):
     sql = """
-    SELECT * FROM adm_graduate_program WHERE institution_id = {filter}
+    SELECT * FROM graduate_program WHERE institution_id = {filter}
 """.format(
         filter=ID
     )
     return pd.DataFrame(
-        sgbdSQL.consultar_db(sql),
+        dbHandler.consultar_db(sql),
         columns=[
             "graduate_program_id",
             "code",

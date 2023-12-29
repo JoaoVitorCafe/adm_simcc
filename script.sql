@@ -8,29 +8,38 @@ CREATE DATABASE adm_simcc
     CONNECTION LIMIT = -1
     IS_TEMPLATE = FALSE;
 
-DROP TABLE  IF EXISTS adm_institution;
-CREATE TABLE adm_institution(
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
+DROP TABLE  IF EXISTS institution;
+CREATE TABLE institution(
       institution_id SERIAL PRIMARY KEY,
       name VARCHAR(150) NOT NULL,
       acronym VARCHAR(20) NOT NULL,
       email_user VARCHAR(100) NOT NULL,
-      PASSWORD  VARCHAR(100) NOT NULL
+      PASSWORD  VARCHAR(100) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
-DROP TABLE  IF EXISTS adm_researcher;
-CREATE TABLE adm_researcher(
+DROP TABLE  IF EXISTS researcher;
+CREATE TABLE researcher(
       researcher_id uuid NOT NULL DEFAULT uuid_generate_v4(),
       name VARCHAR(150) NOT NULL,
       lattes_id VARCHAR(20) NOT NULL,
       institution_id INTEGER NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (researcher_id),
       FOREIGN KEY (institution_id )
-            REFERENCES adm_institution (institution_id)
+            REFERENCES institution (institution_id)
 );
 
 
-DROP TABLE  IF EXISTS adm_graduate_program;
-CREATE TABLE adm_graduate_program(
+DROP TABLE  IF EXISTS graduate_program;
+CREATE TABLE graduate_program(
       graduate_program_id uuid NOT NULL DEFAULT uuid_generate_v4(),
       code VARCHAR(100) NOT NULL,
       name VARCHAR(100) NOT NULL,
@@ -39,21 +48,25 @@ CREATE TABLE adm_graduate_program(
       TYPE VARCHAR(100) NULL,
       rating VARCHAR(5),
       institution_id INTEGER NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (graduate_program_id)
       FOREIGN KEY (institution_id )
-            REFERENCES adm_institution (institution_id)
+            REFERENCES institution (institution_id)
 
 );
 
-DROP TABLE  IF EXISTS adm_graduate_program_researcher;
-      CREATE TABLE adm_graduate_program_researcher(
+DROP TABLE  IF EXISTS graduate_program_researcher;
+CREATE TABLE graduate_program_researcher(
       graduate_program_id uuid NOT NULL DEFAULT uuid_generate_v4(),
-      researcher_id INTEGER,
+      researcher_id uuid NOT NULL DEFAULT uuid_generate_v4(),
       year INTEGER,
       type_ varchar(100),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-      PRIMARY KEY (graduate_program_id,researcher_id, year),
       FOREIGN KEY (researcher_id )
             REFERENCES researcher (researcher_id),
       FOREIGN KEY (graduate_program_id )
-            REFERENCES adm_graduate_program_researcher (graduate_program_id)
+            REFERENCES graduate_program (graduate_program_id)
 );

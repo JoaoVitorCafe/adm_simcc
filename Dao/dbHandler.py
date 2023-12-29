@@ -5,7 +5,7 @@ import psycopg2.extras
 # Função para conectar ao banco
 def conecta_db():
     con = psycopg2.connect(
-        host="localhost", database="prod_simcc", user="postgres", password="987456"
+        host="localhost", database="adm_simcc", user="postgres", password="987456"
     )
 
     return con
@@ -42,8 +42,8 @@ def consultar_db(sql):
         for rec in recset:
             registros.append(rec)
 
-        con.close()
         cur.close()
+        con.close()
 
     except (Exception, psycopg2.DatabaseError) as error:
         print("Error: %s" % error)

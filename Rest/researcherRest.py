@@ -7,25 +7,26 @@ from Model.Resercher import Researcher
 researcherRest = Blueprint("researcherRest", __name__)
 
 
-@researcherRest.route("/admResearcher/Query", methods=["GET"])
+@researcherRest.route("/Researcher/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonResearchers = list()
 
-    dfResearcher = ResearcherSQL.query_researcher(request.args.get("institution_id"))
+    dfResearcher = ResearcherSQL.query(request.args.get("institution_id"))
 
     for Index, researcher in dfResearcher.iterrows():
-        Rs = Researcher()
-        Rs.researcher_id = researcher["researcher_id"]
-        Rs.name = researcher["name"]
-        Rs.lattes_id = researcher["lattes_id"]
-        Rs.institution_id = researcher["institution_id"]
-        JsonResearchers.append(Rs.get_json())
+        researcher_inst = Researcher()
+        researcher_inst.researcher_id = researcher["researcher_id"]
+        researcher_inst.name = researcher["name"]
+        researcher_inst.lattes_id = researcher["lattes_id"]
+        researcher_inst.institution_id = researcher["institution_id"]
+
+        JsonResearchers.append(researcher_inst.get_json())
 
     return jsonify(JsonResearchers), 200
 
 
-@researcherRest.route("/admResearcher/Insert", methods=["POST"])
+@researcherRest.route("/Researcher/Insert", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():
     JsonInstitutions = request.get_json()
@@ -35,12 +36,12 @@ def Insert():
 
     # Nota - Melhorar a forma de instanciar
     for researcher_data in JsonInstitutions:
-        Rs = Researcher()
-        Rs.researcher_id = researcher_data["researcher_id"]
-        Rs.name = researcher_data["name"]
-        Rs.lattes_id = researcher_data["lattes_id"]
-        Rs.institution_id = researcher_data["institution_id"]
+        researcher_inst = Researcher()
+        researcher_inst.researcher_id = researcher_data["researcher_id"]
+        researcher_inst.name = researcher_data["name"]
+        researcher_inst.lattes_id = researcher_data["lattes_id"]
+        researcher_inst.institution_id = researcher_data["institution_id"]
 
-        ResearcherSQL.insert_researcher(Rs)
+        ResearcherSQL.insert(researcher_inst)
 
     return jsonify("Hello institutionRest"), 200

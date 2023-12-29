@@ -3,14 +3,14 @@ import sys
 
 sys.path.append("../")
 
-import Dao.sgbdSQL as sgbdSQL
+import Dao.dbHandler as dbHandler
 import pandas as pd
 from Model.Institution import Institution
 
 
-def insert_institution(institution):
+def insert(institution):
     sql = """
-      INSERT INTO adm_institution (institution_id, name, acronym, email_user, PASSWORD)
+      INSERT INTO institution (institution_id, name, acronym, email_user, PASSWORD)
       VALUES ('{institution_id}', '{name}', '{acronym}', '{email_user}', '{password}')
    """.format(
         institution_id=institution.institution_id,
@@ -20,16 +20,16 @@ def insert_institution(institution):
         password=institution.password,
     )
 
-    return sgbdSQL.execScript_db(sql)
+    return dbHandler.execScript_db(sql)
 
 
-def query_institution(ID):
+def query(ID):
     sql = """
-    SELECT * FROM adm_institution WHERE institution_id = {filter}
+    SELECT * FROM institution WHERE institution_id = {filter}
 """.format(
         filter=ID
     )
     return pd.DataFrame(
-        sgbdSQL.consultar_db(sql),
+        dbHandler.consultar_db(sql),
         columns=["institution_id", "name", "acronym", "email_user", "password"],
     )

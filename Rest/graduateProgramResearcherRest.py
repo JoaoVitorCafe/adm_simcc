@@ -8,27 +8,30 @@ graduateProgramResearcherRest = Blueprint("graduateProgramResearcherRest", __nam
 
 
 @graduateProgramResearcherRest.route(
-    "/admGraduateProgramResearcherRest/Query", methods=["GET"]
+    "/GraduateProgramResearcherRest/Query", methods=["GET"]
 )
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonGpResearcher = list()
-    dfGpResearcher = GraduateProgramResearcherSQL.query_GpResearcher(
+    dfGpResearcher = GraduateProgramResearcherSQL.query(
         request.args.get("institution_id")
     )
     for Index, GpResearcher in dfGpResearcher.iterrows():
-        GpR = GraduateProgramResearcher()
-        GpR.graduate_program_id = GpResearcher["graduate_program_id"]
-        GpR.researcher_id = GpResearcher["researcher_id"]
-        GpR.year = GpResearcher["year"]
-        GpR.type_ = GpResearcher["type_"]
-        JsonGpResearcher.append(GpR.get_json())
+        graduation_program_researcher_inst = GraduateProgramResearcher()
+        graduation_program_researcher_inst.graduate_program_id = GpResearcher[
+            "graduate_program_id"
+        ]
+        graduation_program_researcher_inst.researcher_id = GpResearcher["researcher_id"]
+        graduation_program_researcher_inst.year = GpResearcher["year"]
+        graduation_program_researcher_inst.type_ = GpResearcher["type_"]
+
+        JsonGpResearcher.append(graduation_program_researcher_inst.get_json())
 
     return jsonify(JsonGpResearcher), 200
 
 
 @graduateProgramResearcherRest.route(
-    "/admGraduateProgramResearcherRest/Insert", methods=["POST"]
+    "/GraduateProgramResearcherRest/Insert", methods=["POST"]
 )
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():
@@ -37,12 +40,14 @@ def Insert():
         return jsonify({"error": "Erro no Json enviado"}), 400
 
     for GpResearcher_data in JsonGpResearcher:
-        GpR = GraduateProgramResearcher()
-        GpR.graduate_program_id = GpResearcher_data["graduate_program_id"]
-        GpR.researcher_id = GpResearcher_data["researcher_id"]
-        GpR.year = GpResearcher_data["year"]
-        GpR.type_ = GpResearcher_data["type_"]
+        gp_researcher_inst = GraduateProgramResearcher()
+        gp_researcher_inst.graduate_program_id = GpResearcher_data[
+            "graduate_program_id"
+        ]
+        gp_researcher_inst.researcher_id = GpResearcher_data["researcher_id"]
+        gp_researcher_inst.year = GpResearcher_data["year"]
+        gp_researcher_inst.type_ = GpResearcher_data["type_"]
 
-        GraduateProgramResearcherSQL.insert_GpResearcher(GpR)
+        GraduateProgramResearcherSQL.insert(gp_researcher_inst)
 
     return jsonify("Hello graduateProgramResearcherRest"), 200

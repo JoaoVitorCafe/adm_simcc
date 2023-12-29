@@ -3,14 +3,14 @@ import sys
 
 sys.path.append("../")
 
-import Dao.sgbdSQL as sgbdSQL
+import Dao.dbHandler as dbHandler
 import pandas as pd
 from Model.Resercher import Researcher
 
 
-def insert_researcher(Researcher):
+def insert(Researcher):
     sql = """
-      INSERT INTO adm_researcher (researcher_id, name, lattes_id, institution_id)
+      INSERT INTO researcher (researcher_id, name, lattes_id, institution_id)
       VALUES ('{researcher_id}', '{name}', '{lattes_id}', '{institution_id}')
    """.format(
         researcher_id=Researcher.researcher_id,
@@ -19,16 +19,16 @@ def insert_researcher(Researcher):
         institution_id=Researcher.institution_id,
     )
 
-    return sgbdSQL.execScript_db(sql)
+    return dbHandler.execScript_db(sql)
 
 
-def query_researcher(ID):
+def query(ID):
     sql = """
-    SELECT * FROM adm_researcher WHERE institution_id = {filter}
+    SELECT * FROM researcher WHERE institution_id = {filter}
 """.format(
         filter=ID
     )
     return pd.DataFrame(
-        sgbdSQL.consultar_db(sql),
+        dbHandler.consultar_db(sql),
         columns=["researcher_id", "name", "lattes_id", "institution_id"],
     )
