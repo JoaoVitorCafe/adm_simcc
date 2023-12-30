@@ -4,7 +4,7 @@ from flask_cors import cross_origin
 from Dao import GraduateProgramSQL
 from Model.GraduateProgram import GraduateProgram
 
-graduateProgramAdmRest = Blueprint("graduateProgramAdmRest", __name__)
+graduateProgramRest = Blueprint("graduateProgramRest", __name__)
 
 
 @graduateProgramAdmRest.route("/GraduateProgramRest/Query", methods=["GET"])
@@ -25,6 +25,8 @@ def Query():
         graduation_program_int.type = graduateprogram["type"]
         graduation_program_int.rating = graduateprogram["rating"]
         graduation_program_int.institution_id = graduateprogram["institution_id"]
+        graduation_program_int.description = graduateprogram["description"]
+        graduation_program_int.url_image = graduateprogram["url_image"]
 
         JsonGraduateProgram.append(graduation_program_int.get_json())
 
@@ -50,6 +52,8 @@ def Insert():
             Gp.type = GraduateProgram_data["type"]
             Gp.rating = GraduateProgram_data["rating"]
             Gp.institution_id = GraduateProgram_data["institution_id"]
+            Gp.description = GraduateProgram_data["description"]
+            Gp.url_image = GraduateProgram_data["url_image"]
 
             GraduateProgramSQL.insert(Gp)
         except Exception as Error:

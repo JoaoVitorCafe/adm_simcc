@@ -3,13 +3,13 @@ from flask_cors import CORS, cross_origin
 from Rest.graduateProgramResearcherRest import graduateProgramResearcherRest
 from Rest.institutionRest import institutionRest
 from Rest.researcherRest import researcherRest
-from Rest.graduateProgramRest import graduateProgramAdmRest
+from Rest.graduateProgramRest import graduateProgramRest
 
 
 app = Flask(__name__)
 app.register_blueprint(institutionRest)
 app.register_blueprint(researcherRest)
-app.register_blueprint(graduateProgramAdmRest)
+app.register_blueprint(graduateProgramRest)
 app.register_blueprint(graduateProgramResearcherRest)
 
 

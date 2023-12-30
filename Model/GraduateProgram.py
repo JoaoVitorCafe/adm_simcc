@@ -21,5 +21,7 @@ class GraduateProgram(object):
             "type": str(self.type),
             "rating": str(self.rating),
             "institution_id": str(self.institution_id),
+            "description": str(self.description),
+            "url_image": str(self.url_image),
         }
         return graduateProgram
