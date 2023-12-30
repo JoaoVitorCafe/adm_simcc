@@ -7,7 +7,7 @@ from Model.Institution import Institution
 institutionRest = Blueprint("institutionRest", __name__)
 
 
-@institutionRest.route("/Institution/Query", methods=["GET"])
+@institutionRest.route("/InstitutionRest/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonInstitutions = list()
@@ -25,7 +25,7 @@ def Query():
     return jsonify(JsonInstitutions), 200
 
 
-@institutionRest.route("/Institution/Insert", methods=["POST"])
+@institutionRest.route("/InstitutionRest/Insert", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():
     JsonInstitutions = request.get_json()

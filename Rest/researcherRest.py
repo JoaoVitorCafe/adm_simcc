@@ -7,7 +7,7 @@ from Model.Resercher import Researcher
 researcherRest = Blueprint("researcherRest", __name__)
 
 
-@researcherRest.route("/Researcher/Query", methods=["GET"])
+@researcherRest.route("/ResearcherRest/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonResearchers = list()
@@ -26,7 +26,7 @@ def Query():
     return jsonify(JsonResearchers), 200
 
 
-@researcherRest.route("/Researcher/Insert", methods=["POST"])
+@researcherRest.route("/ResearcherRest/Insert", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():
     JsonInstitutions = request.get_json()
