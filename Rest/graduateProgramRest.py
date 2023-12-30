@@ -7,7 +7,7 @@ from Model.GraduateProgram import GraduateProgram
 graduateProgramRest = Blueprint("graduateProgramRest", __name__)
 
 
-@graduateProgramAdmRest.route("/GraduateProgramRest/Query", methods=["GET"])
+@graduateProgramRest.route("/GraduateProgramRest/Query", methods=["GET"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonGraduateProgram = list()
@@ -33,7 +33,7 @@ def Query():
     return jsonify(JsonGraduateProgram), 200
 
 
-@graduateProgramAdmRest.route("/GraduateProgramRest/Insert", methods=["POST"])
+@graduateProgramRest.route("/GraduateProgramRest/Insert", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Insert():
     JsonGraduateProgram = request.get_json()
