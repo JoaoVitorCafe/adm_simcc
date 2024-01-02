@@ -14,23 +14,32 @@ def Query():
     dfGraduateProgram = GraduateProgramSQL.query(request.args.get("institution_id"))
 
     for Index, graduateprogram in dfGraduateProgram.iterrows():
-        graduation_program_int = GraduateProgram()
-        graduation_program_int.graduate_program_id = graduateprogram[
+        graduation_program_inst = GraduateProgram()
+        graduation_program_inst.graduate_program_id = graduateprogram[
             "graduate_program_id"
         ]
-        graduation_program_int.code = graduateprogram["code"]
-        graduation_program_int.name = graduateprogram["name"]
-        graduation_program_int.area = graduateprogram["area"]
-        graduation_program_int.modality = graduateprogram["modality"]
-        graduation_program_int.type = graduateprogram["type"]
-        graduation_program_int.rating = graduateprogram["rating"]
-        graduation_program_int.institution_id = graduateprogram["institution_id"]
-        graduation_program_int.description = graduateprogram["description"]
-        graduation_program_int.url_image = graduateprogram["url_image"]
+        graduation_program_inst.code = graduateprogram["code"]
+        graduation_program_inst.name = graduateprogram["name"]
+        graduation_program_inst.area = graduateprogram["area"]
+        graduation_program_inst.modality = graduateprogram["modality"]
+        graduation_program_inst.type = graduateprogram["type"]
+        graduation_program_inst.rating = graduateprogram["rating"]
+        graduation_program_inst.institution_id = graduateprogram["institution_id"]
+        graduation_program_inst.description = graduateprogram["description"]
+        graduation_program_inst.url_image = graduateprogram["url_image"]
+        graduation_program_inst.city = graduateprogram["city"]
+        graduation_program_inst.visible = graduateprogram["visible"]
 
-        JsonGraduateProgram.append(graduation_program_int.get_json())
+        JsonGraduateProgram.append(graduation_program_inst.get_json())
 
     return jsonify(JsonGraduateProgram), 200
+
+
+@graduateProgramRest.route("/GraduateProgramRest/Update", methods=["GET"])
+@cross_origin(origin="*", headers=["Content-Type"])
+def Update():
+    GraduateProgramSQL.Update(request.args.get("graduate_program_id"))
+    return jsonify("Update bem sucedido"), 200
 
 
 @graduateProgramRest.route("/GraduateProgramRest/Insert", methods=["POST"])
@@ -43,20 +52,33 @@ def Insert():
 
     for GraduateProgram_data in JsonGraduateProgram:
         try:
-            Gp = GraduateProgram()
-            Gp.graduate_program_id = GraduateProgram_data["graduate_program_id"]
-            Gp.code = GraduateProgram_data["code"]
-            Gp.name = GraduateProgram_data["name"]
-            Gp.area = GraduateProgram_data["area"]
-            Gp.modality = GraduateProgram_data["modality"]
-            Gp.type = GraduateProgram_data["type"]
-            Gp.rating = GraduateProgram_data["rating"]
-            Gp.institution_id = GraduateProgram_data["institution_id"]
-            Gp.description = GraduateProgram_data["description"]
-            Gp.url_image = GraduateProgram_data["url_image"]
+            graduation_program_inst = GraduateProgram()
+            graduation_program_inst.graduate_program_id = GraduateProgram_data[
+                "graduate_program_id"
+            ]
+            graduation_program_inst.code = GraduateProgram_data["code"]
+            graduation_program_inst.name = GraduateProgram_data["name"]
+            graduation_program_inst.area = GraduateProgram_data["area"]
+            graduation_program_inst.modality = GraduateProgram_data["modality"]
+            graduation_program_inst.type = GraduateProgram_data["type"]
+            graduation_program_inst.rating = GraduateProgram_data["rating"]
+            graduation_program_inst.institution_id = GraduateProgram_data[
+                "institution_id"
+            ]
+            graduation_program_inst.description = GraduateProgram_data["description"]
+            graduation_program_inst.url_image = GraduateProgram_data["url_image"]
+            graduation_program_inst.city = GraduateProgram_data["city"]
+            graduation_program_inst.visible = GraduateProgram_data["visible"]
 
-            GraduateProgramSQL.insert(Gp)
+            GraduateProgramSQL.insert(graduation_program_inst)
         except Exception as Error:
             return jsonify(f"{Error}"), 400
 
-    return jsonify("Incerssão bem sucedida"), 200
+    return jsonify("OK"), 200
+
+
+@graduateProgramRest.route("/GraduateProgramRest/Delete", methods=["DELETE"])
+@cross_origin(origin="*", headers=["Content-Type"])
+def Delete():
+    GraduateProgramSQL.Delete(request.args.get("graduate_program_id"))
+    return jsonify("Ok"), 200

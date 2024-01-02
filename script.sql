@@ -50,12 +50,13 @@ CREATE TABLE graduate_program(
       institution_id INTEGER NOT NULL,
       description VARCHAR(500) NULL,
       url_image VARCHAR(200) NULL,
+      city varchar(100) NULL,
+      visible bool DEFAULT FALSE,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (graduate_program_id),
       FOREIGN KEY (institution_id )
             REFERENCES institution (institution_id)
-
 );
 
 DROP TABLE  IF EXISTS graduate_program_researcher;

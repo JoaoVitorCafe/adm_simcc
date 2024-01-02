@@ -8,7 +8,7 @@ import pandas as pd
 from Model.Resercher import Researcher
 
 
-def insert(Researcher):
+def Insert(Researcher):
     sql = """
       INSERT INTO researcher (researcher_id, name, lattes_id, institution_id)
       VALUES ('{researcher_id}', '{name}', '{lattes_id}', '{institution_id}')
@@ -22,7 +22,7 @@ def insert(Researcher):
     return dbHandler.execScript_db(sql)
 
 
-def query(ID):
+def Query(ID):
     sql = """
     SELECT * FROM researcher WHERE institution_id = {filter}
 """.format(
@@ -32,3 +32,14 @@ def query(ID):
         dbHandler.consultar_db(sql),
         columns=["researcher_id", "name", "lattes_id", "institution_id"],
     )
+
+
+def Delete(ID):
+    sql = """
+    DELETE FROM graduate_program_researcher WHERE researcher_id = '{filter}';
+             DELETE FROM researcher WHERE researcher_id = '{filter}';
+""".format(
+        filter=ID
+    )
+    dbHandler.execScript_db(sql=sql)
+    return "OK"

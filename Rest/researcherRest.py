@@ -12,7 +12,7 @@ researcherRest = Blueprint("researcherRest", __name__)
 def Query():
     JsonResearchers = list()
 
-    dfResearcher = ResearcherSQL.query(request.args.get("institution_id"))
+    dfResearcher = ResearcherSQL.Query(request.args.get("institution_id"))
 
     for Index, researcher in dfResearcher.iterrows():
         researcher_inst = Researcher()
@@ -42,8 +42,15 @@ def Insert():
             researcher_inst.lattes_id = researcher_data["lattes_id"]
             researcher_inst.institution_id = researcher_data["institution_id"]
 
-            ResearcherSQL.insert(researcher_inst)
+            ResearcherSQL.Insert(researcher_inst)
     except Exception as Error:
         return jsonify(f"{Error}"), 400
 
     return jsonify("Incerssão bem sucedida"), 200
+
+
+@researcherRest.route("/ResearcherRest/Delete", methods=["GET"])
+@cross_origin(origin="*", headers=["Content-Type"])
+def Delete():
+    ResearcherSQL.Delete(request.args.get("researcher_id"))
+    return "Ok"

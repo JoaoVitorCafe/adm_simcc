@@ -10,9 +10,9 @@ from Model.GraduateProgram import GraduateProgram
 
 def insert(GraduateProgram):
     sql = """
-    INSERT INTO graduate_program (graduate_program_id, code, name, area, modality, TYPE, rating, institution_id, description, url_image)
+    INSERT INTO graduate_program (graduate_program_id, code, name, area, modality, TYPE, rating, institution_id, description, url_image, city, visible)
     VALUES
-        ('{graduate_program_id}', '{code}', '{name}', '{area}', '{modality}', '{TYPE}', '{rating}', '{institution_id}', '{description}', '{url_image}')
+        ('{graduate_program_id}', '{code}', '{name}', '{area}', '{modality}', '{TYPE}', '{rating}', '{institution_id}', '{description}', '{url_image}', '{city}', '{visible}')
     """.format(
         graduate_program_id=GraduateProgram.graduate_program_id,
         code=GraduateProgram.code,
@@ -24,6 +24,8 @@ def insert(GraduateProgram):
         institution_id=GraduateProgram.institution_id,
         description=GraduateProgram.description,
         url_image=GraduateProgram.url_image,
+        city=GraduateProgram.city,
+        visible=GraduateProgram.visible,
     )
 
     return dbHandler.execScript_db(sql)
@@ -48,7 +50,25 @@ def query(ID):
             "institution_id",
             "description",
             "url_image",
+            "city",
+            "visible",
             "created_at",
             "updated_at",
         ],
     )
+
+
+def Update(ID):
+    sql = """UPDATE graduate_program SET visible = NOT visible WHERE graduate_program_id = '{filter}';""".format(
+        filter=ID
+    )
+    dbHandler.execScript_db(sql=sql)
+    return "Update concluido"
+
+
+def Delete(ID):
+    sql = """DELETE FROM graduate_program WHERE graduate_program_id = '{filter}';""".format(
+        filter=ID
+    )
+    dbHandler.execScript_db(sql=sql)
+    return "Delete concluido"

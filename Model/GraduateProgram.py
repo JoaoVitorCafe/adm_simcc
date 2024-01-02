@@ -10,6 +10,8 @@ class GraduateProgram(object):
         self.institution_id = None
         self.description = str()
         self.url_image = str()
+        self.city = str()
+        self.visible = False
 
     def get_json(self):
         graduateProgram = {
@@ -23,5 +25,7 @@ class GraduateProgram(object):
             "institution_id": str(self.institution_id),
             "description": str(self.description),
             "url_image": str(self.url_image),
+            "city": str(self.city),
+            "visible": str(self.visible),
         }
         return graduateProgram
