@@ -8,7 +8,7 @@ import pandas as pd
 from Model.Institution import Institution
 
 
-def insert(institution):
+def Insert(institution):
     sql = """
       INSERT INTO institution (institution_id, name, acronym, email_user, PASSWORD)
       VALUES ('{institution_id}', '{name}', '{acronym}', '{email_user}', '{password}')
@@ -23,7 +23,7 @@ def insert(institution):
     return dbHandler.execScript_db(sql)
 
 
-def query(ID):
+def Query(ID):
     sql = """
     SELECT * FROM institution WHERE institution_id = {filter}
 """.format(

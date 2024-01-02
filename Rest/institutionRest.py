@@ -11,7 +11,7 @@ institutionRest = Blueprint("institutionRest", __name__)
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonInstitutions = list()
-    dfInstitutions = InstitutionSQL.query(request.args.get("institution_id"))
+    dfInstitutions = InstitutionSQL.Query(request.args.get("institution_id"))
     for Index, institution in dfInstitutions.iterrows():
         institution_inst = Institution()
         institution_inst.institution_id = institution["institution_id"]
@@ -42,7 +42,7 @@ def Insert():
             institution_instance.email_user = institution_data["email_user"]
             institution_instance.password = institution_data["password"]
 
-            InstitutionSQL.insert(institution_instance)
+            InstitutionSQL.Insert(institution_instance)
     except Exception as Error:
         return jsonify(f"{Error}"), 400
 

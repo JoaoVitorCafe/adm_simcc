@@ -8,7 +8,7 @@ import pandas as pd
 from Model.GraduateProgram import GraduateProgram
 
 
-def insert(GraduateProgram):
+def Insert(GraduateProgram):
     sql = """
     INSERT INTO graduate_program (graduate_program_id, code, name, area, modality, TYPE, rating, institution_id, description, url_image, city, visible)
     VALUES
@@ -31,7 +31,7 @@ def insert(GraduateProgram):
     return dbHandler.execScript_db(sql)
 
 
-def query(ID):
+def Query(ID):
     sql = """
     SELECT * FROM graduate_program WHERE institution_id = {filter}
 """.format(
@@ -72,3 +72,25 @@ def Delete(ID):
     )
     dbHandler.execScript_db(sql=sql)
     return "Delete concluido"
+
+
+def Fix(GraduateProgram):
+    sql = """UPDATE graduate_program
+	SET graduate_program_id='{graduate_program_id}', code='{code}', name='{name}', area='{area}', modality='{modality}', type='{TYPE}', rating='{rating}', institution_id='{institution_id}', description='{description}', url_image='{url_image}', city='{city}', visible='{visible}'
+	WHERE graduate_program_id = '{filter}';""".format(
+        graduate_program_id=GraduateProgram.graduate_program_id,
+        code=GraduateProgram.code,
+        name=GraduateProgram.name,
+        area=GraduateProgram.area,
+        modality=GraduateProgram.modality,
+        TYPE=GraduateProgram.type,
+        rating=GraduateProgram.rating,
+        institution_id=GraduateProgram.institution_id,
+        description=GraduateProgram.description,
+        url_image=GraduateProgram.url_image,
+        city=GraduateProgram.city,
+        visible=GraduateProgram.visible,
+        filter=GraduateProgram.graduate_program_id,
+    )
+    dbHandler.execScript_db(sql=sql)
+    return "Update concluido"

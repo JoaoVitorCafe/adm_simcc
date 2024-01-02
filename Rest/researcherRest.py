@@ -49,7 +49,7 @@ def Insert():
     return jsonify("Incerssão bem sucedida"), 200
 
 
-@researcherRest.route("/ResearcherRest/Delete", methods=["GET"])
+@researcherRest.route("/ResearcherRest/Delete", methods=["DELETE"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Delete():
     ResearcherSQL.Delete(request.args.get("researcher_id"))

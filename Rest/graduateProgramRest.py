@@ -11,7 +11,7 @@ graduateProgramRest = Blueprint("graduateProgramRest", __name__)
 @cross_origin(origin="*", headers=["Content-Type"])
 def Query():
     JsonGraduateProgram = list()
-    dfGraduateProgram = GraduateProgramSQL.query(request.args.get("institution_id"))
+    dfGraduateProgram = GraduateProgramSQL.Query(request.args.get("institution_id"))
 
     for Index, graduateprogram in dfGraduateProgram.iterrows():
         graduation_program_inst = GraduateProgram()
@@ -70,7 +70,7 @@ def Insert():
             graduation_program_inst.city = GraduateProgram_data["city"]
             graduation_program_inst.visible = GraduateProgram_data["visible"]
 
-            GraduateProgramSQL.insert(graduation_program_inst)
+            GraduateProgramSQL.Insert(graduation_program_inst)
         except Exception as Error:
             return jsonify(f"{Error}"), 400
 
@@ -82,3 +82,38 @@ def Insert():
 def Delete():
     GraduateProgramSQL.Delete(request.args.get("graduate_program_id"))
     return jsonify("Ok"), 200
+
+
+@graduateProgramRest.route("/GraduateProgramRest/Fix", methods=["POST"])
+@cross_origin(origin="*", headers=["Content-Type"])
+def Fix():
+    JsonGraduateProgram = request.get_json()
+
+    if not JsonGraduateProgram:
+        return jsonify({"error": "Erro no Json enviado"}), 400
+
+    for GraduateProgram_data in JsonGraduateProgram:
+        try:
+            graduation_program_inst = GraduateProgram()
+            graduation_program_inst.graduate_program_id = GraduateProgram_data[
+                "graduate_program_id"
+            ]
+            graduation_program_inst.code = GraduateProgram_data["code"]
+            graduation_program_inst.name = GraduateProgram_data["name"]
+            graduation_program_inst.area = GraduateProgram_data["area"]
+            graduation_program_inst.modality = GraduateProgram_data["modality"]
+            graduation_program_inst.type = GraduateProgram_data["type"]
+            graduation_program_inst.rating = GraduateProgram_data["rating"]
+            graduation_program_inst.institution_id = GraduateProgram_data[
+                "institution_id"
+            ]
+            graduation_program_inst.description = GraduateProgram_data["description"]
+            graduation_program_inst.url_image = GraduateProgram_data["url_image"]
+            graduation_program_inst.city = GraduateProgram_data["city"]
+            graduation_program_inst.visible = GraduateProgram_data["visible"]
+
+            GraduateProgramSQL.Fix(graduation_program_inst)
+        except Exception as Error:
+            return jsonify(f"{Error}"), 400
+
+    return jsonify("OK"), 200
