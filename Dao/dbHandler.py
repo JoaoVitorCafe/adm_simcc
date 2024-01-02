@@ -1,16 +1,15 @@
 import psycopg2
 import psycopg2.extras
 
+
 # Função para conectar ao banco
 def conecta_db():
     con = psycopg2.connect(
-        host='localhost',
-        database='adm_simcc',
-        user='postgres',
-        password='root'
+        host="localhost", database="adm_simcc", user="postgres", password="987456"
     )
 
     return con
+
 
 # Função para inserir dados
 def execScript_db(sql):
@@ -20,15 +19,16 @@ def execScript_db(sql):
     try:
         cur.execute(sql)
         con.commit()
-    
+
     except (Exception, psycopg2.DatabaseError) as error:
         print("Error: %s" % error)
         con.rollback()
         cur.close()
         return 1
-    
+
     cur.close()
     con.close()
+
 
 # Função para consultas
 def consultar_db(sql):
@@ -41,14 +41,14 @@ def consultar_db(sql):
 
         for rec in recset:
             registros.append(rec)
-        
-        con.close()
+
         cur.close()
-    
+        con.close()
+
     except (Exception, psycopg2.DatabaseError) as error:
         print("Error: %s" % error)
         con.rollback()
         cur.close()
         return 1
-    
+
     return registros
