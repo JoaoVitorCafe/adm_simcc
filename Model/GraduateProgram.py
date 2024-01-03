@@ -26,6 +26,6 @@ class GraduateProgram(object):
             "description": str(self.description),
             "url_image": str(self.url_image),
             "city": str(self.city),
-            "visible": str(self.visible),
+            "visible": bool(self.visible),
         }
         return graduateProgram
