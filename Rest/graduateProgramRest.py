@@ -35,7 +35,7 @@ def Query():
     return jsonify(JsonGraduateProgram), 200
 
 
-@graduateProgramRest.route("/GraduateProgramRest/Update", methods=["GET"])
+@graduateProgramRest.route("/GraduateProgramRest/Update", methods=["POST"])
 @cross_origin(origin="*", headers=["Content-Type"])
 def Update():
     GraduateProgramSQL.Update(request.args.get("graduate_program_id"))
